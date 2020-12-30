@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib
 import json
 import matplotlib.pyplot as plt
+from time import process_time
+
 
 matplotlib.use("TkAgg")
 
@@ -79,8 +81,18 @@ def refresh(index_matrix):
 index = 0
 ax.imshow(state_matrix_l[0].astype('uint8'))
 plt.pause(8)
-for i in range(1000):
+deltas = []
+for i in range(100):
     ax.imshow(state_matrix_l[i % 2].astype('uint8'))
+    t = process_time()
     plt.pause(.001)
+    ax.cla()
+    deltas.append(process_time()-t)
     ax.set_title("frame {}".format(i))
     refresh(i % 2)
+
+import pickle
+
+with open('debug_data.data', 'wb') as filehandle:
+    # store the data as binary data stream
+    pickle.dump(deltas, filehandle)
