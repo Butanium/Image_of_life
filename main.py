@@ -22,8 +22,16 @@ plt.gca().axes.get_yaxis().set_visible(False)
 plt.gca().axes.get_xaxis().set_visible(False)
 
 inp_image = img.imread("input_images/" + img_file)
+# inp_image = np.random.random((20,20,3))
+# inp_image*=255
+# inp_image = inp_image.astype(int)
 dimensions = [len(inp_image), len(inp_image[0]), 3]
-state_matrix_l = [inp_image, np.zeros(dimensions, dtype=int)]
+m1 = np.zeros(dimensions, dtype=int)
+for i in range(dimensions[0]):
+    for j in range(dimensions[1]):
+        for k in range(dimensions[2]):
+            m1[i][j][k] = inp_image[i][j][k]
+state_matrix_l = [m1, np.zeros(dimensions, dtype=int)]
 occup_list = [[0, 1], [0, -1], [1, 0], [1, 1], [1, -1], [-1, 0], [-1, 1], [-1, -1]]
 
 
@@ -81,7 +89,7 @@ def refresh(index_matrix):
 index = 0
 ax.imshow(state_matrix_l[0].astype('uint8'))
 plt.pause(8)
-# deltas = []
+deltas = []
 for i in range(100):
     ax.imshow(state_matrix_l[i % 2].astype('uint8'))
     # t = process_time()
@@ -89,10 +97,11 @@ for i in range(100):
     ax.cla()
     # deltas.append(process_time()-t)
     ax.set_title("frame {}".format(i))
+    t = process_time()
     refresh(i % 2)
+    deltas.append(process_time()-t)
+import pickle
 
-# import pickle
-#
-# with open('debug_data.data', 'wb') as filehandle:
-#     # store the data as binary data stream
-#     pickle.dump(deltas, filehandle)
+with open('debug_data.data', 'wb') as filehandle:
+    # store the data as binary data stream
+    pickle.dump(deltas, filehandle)
