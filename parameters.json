@@ -1,5 +1,5 @@
 {
-  "death_color" : "black",
-  "img_file" : "test.jpg",
-  "tolerance" : 15
+  "death_color" : "white",
+  "img_file" : "draw.jpg",
+  "tolerance" : 10
 }

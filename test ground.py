@@ -12,9 +12,8 @@ a = string.replace('-', '+-').split('+')
 print(a)
 print(sum(map(int, a)))
 
-exit()
 np.random.seed(19680801)
-data = np.random.random((50, 50, 50))
+data = np.random.random((50, 50))
 
 fig, ax = plt.subplots()
 
