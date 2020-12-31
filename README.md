@@ -24,3 +24,4 @@ value : a positive integer
 both are array of number between 0 and 8
 
 
+![](DEMO-output.gif)
