@@ -15,7 +15,9 @@ with open('parameters.json') as parameters:
     death_color = colors[data['death_color']]
     img_file = data['img_file']
     tolerance = data['tolerance']
-
+    rules = data['rules']
+    delta_t = data["delta_t"]
+    nb_iterations = data["iterations"]
 fig, ax = plt.subplots()
 ax.cla()
 plt.gca().axes.get_yaxis().set_visible(False)
@@ -75,12 +77,12 @@ def refresh(index_matrix):
         for c in range(dimensions[1]):
             nb_a_neighbours, nb_d_neighbours, new_color, d_color = get_neighbours(l, c, state_matrix)
             if is_cell_alive(l, c, state_matrix):
-                if nb_a_neighbours in (2, 3):
-                    new_matrix[l][c] = (state_matrix[l][c] + new_color * nb_a_neighbours) // (nb_a_neighbours + 1)
-                else:
+                if nb_a_neighbours in rules['death']:
                     new_matrix[l][c] = (death_color + nb_d_neighbours * d_color) // (nb_d_neighbours + 1)
+                else:
+                    new_matrix[l][c] = (state_matrix[l][c] + new_color * nb_a_neighbours) // (nb_a_neighbours + 1)
             else:
-                if nb_a_neighbours == 3:
+                if nb_a_neighbours in rules['birth']:
                     new_matrix[l][c] = new_color
                 else:
                     new_matrix[l][c] = (state_matrix[l][c] + nb_d_neighbours * d_color) // (nb_d_neighbours + 1)
@@ -88,12 +90,13 @@ def refresh(index_matrix):
 
 index = 0
 ax.imshow(state_matrix_l[0].astype('uint8'))
-plt.pause(8)
+plt.pause(.1)
+input("enter anything to start")
 deltas = []
-for i in range(100):
+for i in range(nb_iterations):
     ax.imshow(state_matrix_l[i % 2].astype('uint8'))
     # t = process_time()
-    plt.pause(.001)
+    plt.pause(delta_t)
     ax.cla()
     # deltas.append(process_time()-t)
     ax.set_title("frame {}".format(i))

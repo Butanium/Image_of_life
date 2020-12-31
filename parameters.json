@@ -1,5 +1,13 @@
 {
-  "death_color" : "white",
-  "img_file" : "draw.jpg",
-  "tolerance" : 10
+  "death_color" : "black",
+  "img_file" : "white_background.jpg",
+  "tolerance" : 300,
+  "delta_t" : 0.001,
+  "iterations" : 200,
+  "rules" :
+  {
+    "death" : [0,1,4,5,6,7],
+    "birth" : [3]
+
+  }
 }
