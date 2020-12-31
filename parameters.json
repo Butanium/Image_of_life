@@ -1,9 +1,9 @@
 {
-  "death_color" : "black",
-  "img_file" : "white_background.jpg",
-  "tolerance" : 300,
+  "death_color" : "white",
+  "tolerance" : 100,
+  "img_file" : "iron_cross.jpg",
   "delta_t" : 0.001,
-  "iterations" : 200,
+  "iterations" : 500,
   "rules" :
   {
     "death" : [0,1,4,5,6,7],
